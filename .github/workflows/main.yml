@@ -50,7 +50,7 @@ jobs:
           curl -X PATCH "https://api.github.com/gists/$GIST_ID" \
             -H "Authorization: token $GIST_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "$(jq -n --arg content "$(cat clash_config.yaml)" '{files: {"clash_config.yaml": {content: $content}}}')"
+            -d "$(jq -n --arg content "$(cat clash_config.yaml)" '{files: {"FinalProxy.yaml": {content: $content}}}')"
         else
           echo "clash_config.yaml not found"
           exit 1
