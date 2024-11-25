@@ -3,7 +3,7 @@ name: Run ClashForge and Upload Gist
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # 每天运行一次
+    - cron: "02 16 * * *" # 每天运行一次
 
 jobs:
   run-clashforge:
@@ -14,11 +14,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Setup Python
+    # Set up Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
+
+    # Cache Python dependencies
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     # Install dependencies
     - name: Install Python dependencies
