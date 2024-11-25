@@ -1,1 +1,1 @@
-https://gist.githubusercontent.com/jouyouyun/e7cd0c257f2a8c1e5ce762c01f9d189e/raw/clash.yaml
+https://gist.github.com/linbmv/e99ac39b843ec3b1c2a364e9143bb67c/raw/freeproxy.yaml
