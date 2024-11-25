@@ -35,7 +35,7 @@ jobs:
       env:
         GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
       run: |
-        GIST_ID="your_gist_id_here"
+        GIST_ID="b04cdcc8b0bf842f7dc17bb4fcf31fe3"
         # 上传到指定 Gist
         if [ -f clash_config.yaml ]; then
           curl -X PATCH "https://api.github.com/gists/$GIST_ID" \
