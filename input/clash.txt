@@ -1,1 +1,2 @@
 https://gist.github.com/linbmv/e99ac39b843ec3b1c2a364e9143bb67c/raw/freeproxy.yaml
+https://proxypool.link/clash/proxies
