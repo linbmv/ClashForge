@@ -2,8 +2,8 @@ name: Run ClashForge and Upload Gist
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "02 16 * * *" # 每天运行一次
+#  schedule:
+#    - cron: "02 16 * * *" # 每天运行一次
 
 jobs:
   run-clashforge:
