@@ -1,40 +1,35 @@
-name: ClashForge
+name: Generate and Upload Clash Config
 
 on:
-  #schedule:
-  #  - cron: '0 7-22/5 * * *'
-  push:
-    paths-ignore:
-      - '**'
-  workflow_dispatch:
+  schedule:
+    - cron: '02 16 * * *' # 每天 UTC 17:00 运行，对应北京时间凌晨 1:00
+  workflow_dispatch: # 允许手动触发
 
 jobs:
-  run_demo_actions:
+  generate_and_upload:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          # 转到 Settings > Secrets and variables > Actions
-          # 点击 New repository secret，添加 Secret，名称为 BOT，输入你的token
-          token: ${{ secrets.BOT }}
-
+      - uses: actions/checkout@v3
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10.10'
+          python-version: '3.10'
 
-      - name: Install requirements.txt
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
         run: |
-          pip install -r ./requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Run ClashForge.py
+      - name: Run ClashForge script
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
         run: python ClashForge.py
-
-      - name: Commit and push file
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add clash_config.yaml
-          git commit -m "update" || echo "No changes to commit"
-          git push https://${{ secrets.BOT }}:x-oauth-basic@github.com/${GITHUB_REPOSITORY}.git
